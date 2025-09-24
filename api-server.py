@@ -32,3 +32,38 @@ def add_item():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+import requests
+
+
+base_url = 'http://127.0.0.1:5000'
+
+
+response = requests.get(f'{base_url}/api/items')
+
+if response.status_code == 200:
+    print('Items:', response.json())
+else:
+    print('fail:', response.status_code)
+
+item_id = 1  
+response = requests.get(f'{base_url}/api/items/{item_id}')
+
+if response.status_code == 200:
+    print('Item:', response.json())
+else:
+    print('fail', response.status_code)
+
+new_item = {
+    "id": 4,
+    "type": "new",
+    "category": "members"
+}
+
+response = requests.post(f'{base_url}/api/items', json=new_item)
+
+if response.status_code == 201:
+    print('Added item:', response.json())
+else:
+    print('failed to add:', response.status_code)
